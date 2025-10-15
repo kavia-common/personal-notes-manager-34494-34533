@@ -1,19 +1,51 @@
+<script lang="ts">
+    import Header from '$lib/components/Header.svelte';
+    import NotesList from '$lib/components/NotesList.svelte';
+    import NoteEditor from '$lib/components/NoteEditor.svelte';
+    import Footer from '$lib/components/Footer.svelte';
+    import { keyboardShortcuts } from '$lib/stores/notes';
+
+    // mount to enable global keyboard shortcuts
+    $effect(() => {
+        const unsub = keyboardShortcuts.subscribe(() => {});
+        return () => unsub();
+    });
+</script>
+
 <svelte:head>
-    <title>notes_frontend</title>
+    <title>Ocean Notes</title>
 </svelte:head>
 
 <div class="container">
-    <p>notes_frontend is being generated</p>
+    <Header />
+
+    <section class="workspace">
+        <aside class="left">
+            <NotesList />
+        </aside>
+        <section class="right">
+            <NoteEditor />
+        </section>
+    </section>
+
+    <Footer />
 </div>
 
 <style>
-    .container {
-        text-align: center;
+    .workspace {
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        gap: 1rem;
+        min-height: min(70vh, 900px);
     }
 
-    p {
-        margin: 0;
-        font-size: 2rem;
-        color: var(--color-text-primary);
+    .left, .right {
+        min-height: 60vh;
+    }
+
+    @media (max-width: 900px) {
+        .workspace {
+            grid-template-columns: 1fr;
+        }
     }
 </style>

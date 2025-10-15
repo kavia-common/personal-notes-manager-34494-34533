@@ -9,9 +9,7 @@
 
 <style>
     main {
-        display: flex;
+        display: block;
         min-height: 100vh;
-        align-items: center;
-        justify-content: center;
     }
 </style>
